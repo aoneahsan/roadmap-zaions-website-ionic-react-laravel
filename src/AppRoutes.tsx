@@ -129,6 +129,7 @@ const TestingIonComponents = lazy(
 );
 import PublicRoute from './components/PublicRoute';
 import PrivateRoute from './components/PrivateRoute';
+import ZRoadMap from './pages/General/RoadMap';
 const ZSetPasswordPage = lazy(() => import('./pages/SetPassword'));
 const ZAppStartupPage = lazy(() => import('./pages/AdminPanel/StartUpPage'));
 const ChartsExamples = lazy(() => import('./Testing/Charts'));
@@ -160,6 +161,8 @@ const AppRoutes = () => {
 				path={ZaionsRoutes.ShortLinkRedirectRoute}
 				component={ZShortLinkRedirectPage}
 			/>
+
+			<Route exact path={ZaionsRoutes.RoadMapPublic} component={ZRoadMap} />
 
 			<PublicRoute
 				exact

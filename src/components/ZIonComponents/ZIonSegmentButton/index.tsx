@@ -7,6 +7,7 @@ import { ZIonColorType, ZIonModeType } from '@/types/zaionsAppSettings.type';
 import { zCreateElementTestingSelector } from '@/utils/helpers';
 import { zCreateElementTestingSelectorKeyEnum } from '@/utils/enums';
 import { PRODUCT_NAME } from '@/utils/constants';
+import classNames from 'classnames';
 
 type ZIonSegmentButtonType = {
 	children: ReactNode;
@@ -55,6 +56,7 @@ const ZIonSegmentButton = (props: ZIonSegmentButtonType) => {
 			{...props}
 			{..._testingSelector}
 			{..._testingListSelector}
+			className={classNames(props.className, { 'normal-case': true })}
 		>
 			{props.children}
 		</IonSegmentButton>

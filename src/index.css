@@ -302,6 +302,9 @@ span.new {
 	background-color: rgba(var(--ion-color-medium-rgb), 0.2);
 	color: var(--ion-color-medium-shade);
 }
+.hover\:z_ion_medium_point_1:hover {
+	background-color: rgba(var(--ion-color-medium-rgb), 0.1) !important;
+}
 .zaions__light_set {
 	background: rgba(var(--ion-color-light-rgb), 0.2);
 	color: var(--ion-color-light-contrast);

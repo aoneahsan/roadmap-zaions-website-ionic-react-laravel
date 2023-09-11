@@ -11,6 +11,7 @@ const ZaionsRoutes = {
 
 	// Main routes
 	HomeRoute: '/',
+	RoadMapPublic: '/road-map',
 	LoginRoute: '/sign-in',
 	SetPassword: '/set-password',
 	SignUpRoute: '/sign-up',
