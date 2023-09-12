@@ -135,8 +135,6 @@ const ZWorkspaceListPage: React.FC = () => {
 			(el) => el?.isFavorite === 1
 		);
 
-		// console.log({ _ownedFavoriteWorkspaces, WorkspacesData });
-
 		if (_sharedFavoriteWorkspaces) {
 			setCompState((oldValues) => ({
 				...oldValues,
@@ -152,6 +150,8 @@ const ZWorkspaceListPage: React.FC = () => {
 		}
 	}, [WorkspacesData, WSShareData]);
 
+	const isZFetching = isWorkspacesDataFetching && isWSShareDataFetching;
+
 	return (
 		<ZIonPage pageTitle='Zaions workspaces list page'>
 			<ZCan
@@ -160,7 +160,7 @@ const ZWorkspaceListPage: React.FC = () => {
 			>
 				<ZIonContent className='mb-5'>
 					{/* Main grid */}
-					<ZIonGrid className='ion-no-padding mb-5'>
+					<ZIonGrid className='mb-5 ion-no-padding'>
 						<Suspense
 							fallback={
 								<ZIonRow className='h-[4rem] px-3 zaions__light_bg'>
@@ -172,7 +172,7 @@ const ZWorkspaceListPage: React.FC = () => {
 						</Suspense>
 
 						{/* Favorite workspaces */}
-						<ZIonCard>
+						<ZIonCard className='mt-5 border rounded-lg shadow-none zaions__light_bg'>
 							<ZIonRow className='px-4 py-5'>
 								<ZIonCol size='12' className='ps-3'>
 									<ZIonTitle className='font-bold ion-no-padding'>
@@ -186,11 +186,11 @@ const ZWorkspaceListPage: React.FC = () => {
 								]?.length === 0 && (
 									<ZIonCol
 										size='12'
-										className='flex ion-align-items-center ion-justify-content-center flex-col  py-4 mt-2 rounded-lg'
+										className='flex flex-col py-4 mt-2 rounded-lg ion-align-items-center ion-justify-content-center'
 									>
 										<ZIonIcon icon={heartOutline} className='w-10 h-10' />
 
-										<ZIonText className='mt-1' color='medium'>
+										<ZIonText className='mt-1 text-md' color='dark'>
 											You haven't added any workspaces to your favorites yet.
 											Start by marking your most used workspaces!
 										</ZIonText>
@@ -204,15 +204,14 @@ const ZWorkspaceListPage: React.FC = () => {
 									<>
 										{/* single card */}
 										<Suspense fallback={<ZWorkspacesCardSkeleton />}>
-											{!isWorkspacesDataFetching &&
-												!isWSShareDataFetching &&
+											{!isZFetching &&
 												[
 													...compState?.ownedFavoriteWorkspaces,
 													...compState?.sharedFavoriteWorkspaces,
 												]?.map((el) => (
 													<ZIonCol
-														sizeXl='4'
-														sizeLg='6'
+														sizeXl='3'
+														sizeLg='4'
 														sizeMd='6'
 														sizeSm='6'
 														sizeXs='12'
@@ -237,7 +236,7 @@ const ZWorkspaceListPage: React.FC = () => {
 						</ZIonCard>
 
 						{/* Owned workspaces */}
-						<ZIonCard>
+						<ZIonCard className='mt-5 border rounded-lg shadow-none zaions__light_bg'>
 							<ZIonRow className='px-4 py-5'>
 								<ZIonCol size='12' className='ps-3'>
 									<ZIonTitle className='font-bold ion-no-padding'>
@@ -248,7 +247,7 @@ const ZWorkspaceListPage: React.FC = () => {
 								{WorkspacesData?.length === 0 && (
 									<ZIonCol
 										size='12'
-										className='flex ion-align-items-center ion-justify-content-center flex-col  py-4 mt-2 rounded-lg'
+										className='flex flex-col py-4 mt-2 rounded-lg ion-align-items-center ion-justify-content-center'
 									>
 										<ZIonButton
 											className='ion-no-padding ion-no-margin rounded-full overflow-hidden w-[3rem]'
@@ -257,28 +256,6 @@ const ZWorkspaceListPage: React.FC = () => {
 											onClick={() => {
 												presentZWorkspaceCreateModal({
 													_cssClass: 'create-workspace-modal-size',
-													_onDidDismiss: (event) => {
-														if (
-															event.detail.data &&
-															event.detail.role === 'success'
-														) {
-															// after dismissing redirecting to edit workspace-page
-															// zNavigatePushRoute(
-															// 	createRedirectRoute({
-															// 		url: ZaionsRoutes.AdminPanel.Workspaces
-															// 			.Edit,
-															// 		params: [
-															// 			CONSTANTS.RouteParams.workspace
-															// 				.editWorkspaceIdParam,
-															// 		],
-															// 		values: [event.detail.data],
-															// 		routeSearchParams: {
-															// 			tab: workspaceFormTabEnum.inviteClients,
-															// 		},
-															// 	})
-															// );
-														}
-													},
 												});
 											}}
 										>
@@ -289,7 +266,7 @@ const ZWorkspaceListPage: React.FC = () => {
 											Workspaces
 										</ZIonText>
 
-										<ZIonText className='mt-1' color='medium'>
+										<ZIonText className='mt-1' color='dark'>
 											Start by creating a new workspace and organizing your
 											content.
 										</ZIonText>
@@ -300,12 +277,12 @@ const ZWorkspaceListPage: React.FC = () => {
 									<>
 										{/* single card */}
 										<Suspense fallback={<ZWorkspacesCardSkeleton />}>
-											{!isWorkspacesDataFetching &&
+											{!isZFetching &&
 												WorkspacesData &&
 												WorkspacesData.map((el) => (
 													<ZIonCol
-														sizeXl='4'
-														sizeLg='6'
+														sizeXl='3'
+														sizeLg='4'
 														sizeMd='6'
 														sizeSm='6'
 														sizeXs='12'
@@ -323,21 +300,21 @@ const ZWorkspaceListPage: React.FC = () => {
 												))}
 										</Suspense>
 
-										{isWorkspacesDataFetching && <ZWorkspacesCardSkeleton />}
+										{isZFetching && <ZWorkspacesCardSkeleton />}
 
 										{/* add a workspace card */}
 										<ZCan havePermissions={[permissionsEnum.create_workspace]}>
 											<ZIonCol
-												sizeXl='4'
-												sizeLg='6'
+												sizeXl='3'
+												sizeLg='4'
 												sizeMd='6'
 												sizeSm='6'
 												sizeXs='12'
 											>
-												{!isWorkspacesDataFetching && (
+												{!isZFetching && (
 													<ZIonCard
 														className={classNames({
-															'h-[13.4rem] cursor-pointer': true,
+															'h-[11.4rem] cursor-pointer': true,
 														})}
 														testingselector={
 															CONSTANTS.testingSelectors.workspace.listPage
@@ -380,10 +357,10 @@ const ZWorkspaceListPage: React.FC = () => {
 													</ZIonCard>
 												)}
 
-												{isWorkspacesDataFetching && (
+												{isZFetching && (
 													<ZIonCard
 														className={classNames({
-															'h-[13.4rem] cursor-pointer': true,
+															'h-[11.4rem] cursor-pointer': true,
 														})}
 													>
 														<ZIonCardContent className='flex flex-col h-full ion-align-items-center ion-justify-content-center'>
@@ -403,7 +380,7 @@ const ZWorkspaceListPage: React.FC = () => {
 						</ZIonCard>
 
 						{/* Shared workspaces */}
-						<ZIonCard className='mt-5'>
+						<ZIonCard className='mt-5 border rounded-lg shadow-none zaions__light_bg'>
 							<ZIonRow className='px-4 py-5'>
 								<ZIonCol size='12' className='ps-3'>
 									<ZIonTitle className='font-bold ion-no-padding'>
@@ -414,7 +391,7 @@ const ZWorkspaceListPage: React.FC = () => {
 								{WSShareData?.length === 0 && (
 									<ZIonCol
 										size='12'
-										className='flex ion-align-items-center ion-justify-content-center flex-col  py-4 mt-2 rounded-lg'
+										className='flex flex-col py-4 mt-2 rounded-lg ion-align-items-center ion-justify-content-center'
 									>
 										<ZIonIcon icon={gitNetworkOutline} className='w-10 h-10' />
 
@@ -426,13 +403,13 @@ const ZWorkspaceListPage: React.FC = () => {
 
 								{/* single card */}
 								<Suspense fallback={<ZWorkspacesCardSkeleton />}>
-									{!isWSShareDataFetching &&
+									{!isZFetching &&
 										WSShareData &&
 										WSShareData.map((el) => {
 											return (
 												<ZIonCol
-													sizeXl='4'
-													sizeLg='6'
+													sizeXl='3'
+													sizeLg='4'
 													sizeMd='6'
 													sizeSm='6'
 													sizeXs='12'
@@ -454,7 +431,7 @@ const ZWorkspaceListPage: React.FC = () => {
 										})}
 								</Suspense>
 
-								{isWSShareDataFetching && <ZWorkspacesCardSkeleton />}
+								{isZFetching && <ZWorkspacesCardSkeleton />}
 							</ZIonRow>
 						</ZIonCard>
 					</ZIonGrid>

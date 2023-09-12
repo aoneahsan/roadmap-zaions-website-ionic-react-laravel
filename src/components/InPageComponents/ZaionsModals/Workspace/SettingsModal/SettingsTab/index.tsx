@@ -330,7 +330,7 @@ const ZSettingsTab: React.FC<{
 											.workspaceNameInput
 									}
 									className={classNames({
-										'bg-white': true,
+										z_ion_bg_white: true,
 										'ion-touched': touched.workspaceName,
 										'ion-invalid': errors.workspaceName,
 										'ion-valid': !errors.workspaceName,
@@ -345,16 +345,13 @@ const ZSettingsTab: React.FC<{
 									value={values.workspaceTimezone}
 									onIonChange={handleChange}
 									onIonBlur={handleBlur}
-									style={{
-										'--background': '#fff',
-									}}
 									testingselector={`${CONSTANTS.testingSelectors.workspace.settingsModal.settings.workspaceTimezoneInput}-${workspaceId}`}
 									testingListSelector={
 										CONSTANTS.testingSelectors.workspace.settingsModal.settings
 											.workspaceTimezoneInput
 									}
 									className={classNames({
-										'pt-2 ion-margin-top': true,
+										'pt-2 ion-margin-top z_ion_bg_white': true,
 										'ion-touched': touched.workspaceTimezone,
 										'ion-invalid': errors.workspaceTimezone,
 										'ion-valid': !errors.workspaceTimezone,
@@ -444,7 +441,7 @@ const ZSettingsTab: React.FC<{
 
 					<ZIonButton
 						color='danger'
-						className='mt-2 ion-no-margin normal-case'
+						className='mt-2 normal-case ion-no-margin'
 						testingselector={`${CONSTANTS.testingSelectors.workspace.settingsModal.settings.deleteButton}-${workspaceId}`}
 						testingListSelector={
 							CONSTANTS.testingSelectors.workspace.settingsModal.settings

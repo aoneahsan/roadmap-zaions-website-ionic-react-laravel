@@ -242,7 +242,7 @@ const ZWorkspacesActionPopover: React.FC<{
 			{showManageUserOption && (
 				<ZIonItem
 					minHeight='2.3rem'
-					className='ion-activatable ion-focusable cursor-pointer'
+					className='cursor-pointer ion-activatable ion-focusable'
 					testingselector={
 						CONSTANTS.testingSelectors.workspace.actionsPopover.manageUsers
 					}
@@ -261,7 +261,7 @@ const ZWorkspacesActionPopover: React.FC<{
 			<ZCan havePermissions={[permissionsEnum.viewAny_timeSlot]}>
 				<ZIonItem
 					minHeight='2.3rem'
-					className='ion-activatable ion-focusable cursor-pointer '
+					className='cursor-pointer ion-activatable ion-focusable '
 					testingselector={
 						CONSTANTS.testingSelectors.workspace.actionsPopover
 							.configureTimetable
@@ -288,7 +288,7 @@ const ZWorkspacesActionPopover: React.FC<{
 			{/* Manage labels */}
 			<ZCan havePermissions={[permissionsEnum.viewAny_label]}>
 				<ZIonItem
-					className='ion-activatable ion-focusable cursor-pointer'
+					className='cursor-pointer ion-activatable ion-focusable'
 					minHeight='2.3rem'
 					testingselector={
 						CONSTANTS.testingSelectors.workspace.actionsPopover.manageLabels
@@ -321,7 +321,7 @@ const ZWorkspacesActionPopover: React.FC<{
 						_cssClass: 'workspace-setting-modal-size',
 					});
 				}}
-				className='ion-activatable ion-focusable cursor-pointer'
+				className='cursor-pointer ion-activatable ion-focusable'
 				minHeight={'32px'}
 			>
 				<ZIonIcon icon={peopleOutline} className='me-2' />
@@ -333,7 +333,7 @@ const ZWorkspacesActionPopover: React.FC<{
 			<ZCan havePermissions={[permissionsEnum.update_workspace]}>
 				<ZIonItem
 					minHeight='2.3rem'
-					className='ion-activatable ion-focusable cursor-pointer'
+					className='cursor-pointer ion-activatable ion-focusable'
 					testingselector={
 						CONSTANTS.testingSelectors.workspace.actionsPopover.settings
 					}
@@ -357,7 +357,7 @@ const ZWorkspacesActionPopover: React.FC<{
 			{/* Approvals settings */}
 			<ZIonItem
 				minHeight='2.3rem'
-				className='ion-activatable ion-focusable cursor-pointer'
+				className='cursor-pointer ion-activatable ion-focusable'
 				testingselector={
 					CONSTANTS.testingSelectors.workspace.actionsPopover.approvalSettings
 				}
@@ -380,11 +380,11 @@ const ZWorkspacesActionPopover: React.FC<{
 			</ZIonItem>
 
 			{/* Edit */}
-			{showEditWorkspaceOption && (
+			{/* {showEditWorkspaceOption && (
 				<ZCan havePermissions={[permissionsEnum.update_workspace]}>
 					<ZIonItem
 						minHeight='2.3rem'
-						className='ion-activatable ion-focusable cursor-pointer'
+						className='cursor-pointer ion-activatable ion-focusable'
 						testingselector={
 							CONSTANTS.testingSelectors.workspace.actionsPopover.edit
 						}
@@ -411,14 +411,14 @@ const ZWorkspacesActionPopover: React.FC<{
 						<ZIonText>Edit</ZIonText>
 					</ZIonItem>
 				</ZCan>
-			)}
+			)} */}
 
 			{/* Delete */}
 			{showDeleteWorkspaceOption && (
 				<ZCan havePermissions={[permissionsEnum.delete_workspace]}>
 					<ZIonItem
 						minHeight='2.3rem'
-						className='ion-activatable ion-focusable cursor-pointer'
+						className='cursor-pointer ion-activatable ion-focusable'
 						testingselector={
 							CONSTANTS.testingSelectors.workspace.actionsPopover.delete
 						}

@@ -391,6 +391,7 @@ const ZWorkspaceTimeSlotFormModal: React.FC<{
 												.timetable.formModal.timeInput
 										}
 										className={classNames({
+											z_ion_bg_white: true,
 											'ion-touched': touched.time,
 											'ion-invalid': errors.time,
 											'ion-valid': !errors.time,
@@ -437,6 +438,7 @@ const ZWorkspaceTimeSlotFormModal: React.FC<{
 										}}
 										disabled={mode === FormMode.EDIT}
 										className={classNames({
+											z_ion_bg_white: true,
 											'ion-touched': touched.day,
 											'ion-invalid': errors.day,
 											'ion-valid': !errors.day,

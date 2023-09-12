@@ -228,12 +228,16 @@ span.new {
 	color: var(--ion-color-light);
 }
 
+.zaions_ion_color_white {
+	color: var(--ion-color-white) !important;
+	--color: var(--ion-color-white) !important;
+}
+
 .zaions_ion_color_success {
 	color: var(--ion-color-success);
 	--color: var(--ion-color-success);
 }
-
-.zaions_ion_color_danger {
+l .zaions_ion_color_danger {
 	color: var(--ion-color-danger) !important;
 	--color: var(--ion-color-danger);
 }

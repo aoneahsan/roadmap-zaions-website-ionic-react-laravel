@@ -14,6 +14,7 @@ import {
 	checkmark,
 	closeOutline,
 	createOutline,
+	fileTrayStackedOutline,
 	trashBinOutline,
 } from 'ionicons/icons';
 import { FieldArray, Formik } from 'formik';
@@ -439,7 +440,7 @@ const ZLabelsTab: React.FC<{
 															.labels.labelNameInput
 													}
 													className={classNames({
-														'bg-white': true,
+														z_ion_bg_white: true,
 														'ion-touched': touched.title,
 														'ion-invalid': errors.title,
 														'ion-valid': !errors.title,
@@ -740,6 +741,19 @@ const ZLabelsTab: React.FC<{
 													);
 												}}
 											</FieldArray>
+											{values?.allLabels?.length === 0 ? (
+												<div className='flex flex-col mt-4 ion-align-items-center justify-content-center'>
+													<ZIonIcon
+														icon={fileTrayStackedOutline}
+														className='w-7 h-7'
+														color='medium'
+													/>
+
+													<ZIonText className='mt-2' color='medium'>
+														No label found. please create label.
+													</ZIonText>
+												</div>
+											) : null}
 										</ZIonList>
 									</div>
 								);

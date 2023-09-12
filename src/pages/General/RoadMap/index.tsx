@@ -44,6 +44,7 @@ import {
 import ZRTooltip from '@/components/CustomComponents/ZRTooltip';
 import { useZMediaQueryScale } from '@/ZaionsHooks/ZGenericHooks';
 import ZUserAvatarButton from '@/components/WorkspacesComponents/UserButton';
+import { Formik, useFormikContext } from 'formik';
 
 /**
  * Custom Hooks Imports go down
@@ -79,6 +80,11 @@ import ZUserAvatarButton from '@/components/WorkspacesComponents/UserButton';
  * Component props type go down
  * ? Like if you have a type for props it should be please Down
  * */
+enum ZRoadMapTabEnum {
+	questionsListTab = 'questionsListTab',
+	commentsTab = 'commentsTab',
+	timelogTab = 'timelogTab',
+}
 
 /**
  * Functional Component
@@ -94,7 +100,7 @@ const ZRoadMap: React.FC = () => {
 			{/* Content */}
 			<ZIonContent color='light'>
 				{/* Setting the layout in a way if order to add menu can add easily. */}
-				<ZIonGrid className='ion-no-padding h-full mb-5'>
+				<ZIonGrid className='h-full mb-5 ion-no-padding'>
 					<ZIonRow className='h-full'>
 						{/* in wanna add menu add below. */}
 
@@ -116,9 +122,26 @@ const ZRoadMap: React.FC = () => {
 								{/* in wanna add top bar add below. */}
 
 								{/*  */}
-								<ZIonRow className='ion-justify-content-center py-[2.3rem]'>
-									<ZCommentsTab />
-								</ZIonRow>
+								<Formik
+									initialValues={{
+										tab: ZRoadMapTabEnum.questionsListTab,
+									}}
+									onSubmit={() => {}}
+								>
+									{({ values }) => {
+										return (
+											<ZIonRow className='ion-justify-content-center py-[2.3rem]'>
+												{values.tab === ZRoadMapTabEnum.questionsListTab ? (
+													<ZQuestionsListTab />
+												) : values.tab === ZRoadMapTabEnum.commentsTab ? (
+													<ZCommentsTab />
+												) : values.tab === ZRoadMapTabEnum.timelogTab ? (
+													<ZTimeLogTab />
+												) : null}
+											</ZIonRow>
+										);
+									}}
+								</Formik>
 							</ZIonGrid>
 						</ZIonCol>
 					</ZIonRow>
@@ -129,6 +152,10 @@ const ZRoadMap: React.FC = () => {
 };
 
 const ZCommentsTab: React.FC = () => {
+	const { values, setFieldValue } = useFormikContext<{
+		tab?: ZRoadMapTabEnum;
+	}>();
+
 	return (
 		<>
 			<ZIonCol
@@ -143,7 +170,13 @@ const ZCommentsTab: React.FC = () => {
 					// 'flex-col': !isMdScale,
 				})}
 			>
-				<ZIonIcon icon={arrowBackOutline} className='w-6 h-6' />
+				<ZIonIcon
+					icon={arrowBackOutline}
+					className='w-6 h-6 cursor-pointer'
+					onClick={() => {
+						setFieldValue('tab', ZRoadMapTabEnum.questionsListTab, false);
+					}}
+				/>
 				<ZIonText className='text-lg'>Some Content</ZIonText>
 			</ZIonCol>
 
@@ -153,20 +186,20 @@ const ZCommentsTab: React.FC = () => {
 				sizeMd='10'
 				sizeSm='11'
 				sizeXs='12'
-				className='ion-no-padding zaions__bg_white rounded-b-lg shadow-md  border-b overflow-hidden' //flex ion-justify-content-between
+				className='overflow-hidden border-b rounded-b-lg shadow-md ion-no-padding zaions__bg_white' //flex ion-justify-content-between
 			>
 				<ZIonText className='block py-2 ps-5 pe-2'>
 					Frequently asked request. Please upvote or downvote to share your
 					thoughts.
 				</ZIonText>
 
-				<ZIonText className='block ps-5 pe-2 text-lg'>Comments</ZIonText>
+				<ZIonText className='block text-lg ps-5 pe-2'>Comments</ZIonText>
 
 				<ZIonGrid className='ion-no-padding'>
 					{[1, 2].map((el, index) => {
 						return (
 							<ZIonRow
-								className='hover:z_ion_medium_point_1 p-2 ion-align-items-center ps-3 border-b'
+								className='p-2 border-b hover:z_ion_medium_point_1 ion-align-items-center ps-3'
 								key={index}
 							>
 								<ZIonCol
@@ -186,7 +219,7 @@ const ZCommentsTab: React.FC = () => {
 									</div>
 								</ZIonCol>
 
-								<ZIonCol className='ms-2 flex ion-align-items-center'>
+								<ZIonCol className='flex ms-2 ion-align-items-center'>
 									<ZUserAvatarButton
 										style={{ height: '45px', width: '45px' }}
 									/>
@@ -214,8 +247,11 @@ const ZCommentsTab: React.FC = () => {
 	);
 };
 
-const ZQuestionsList: React.FC = () => {
+const ZQuestionsListTab: React.FC = () => {
 	const { isMdScale, isSmScale } = useZMediaQueryScale();
+	const { values, setFieldValue } = useFormikContext<{
+		tab?: ZRoadMapTabEnum;
+	}>();
 
 	return (
 		<>
@@ -325,12 +361,12 @@ const ZQuestionsList: React.FC = () => {
 				sizeMd='10'
 				sizeSm='11'
 				sizeXs='12'
-				className='ion-no-padding flex ion-justify-content-between zaions__bg_white rounded-b-lg shadow-md  border-b overflow-hidden'
+				className='flex overflow-hidden border-b rounded-b-lg shadow-md ion-no-padding ion-justify-content-between zaions__bg_white'
 			>
 				<ZIonGrid className='ion-no-padding'>
 					{[...Array(5)].map((el, index) => {
 						return (
-							<ZIonRow className='hover:z_ion_medium_point_1 p-2' key={index}>
+							<ZIonRow className='p-2 hover:z_ion_medium_point_1' key={index}>
 								{/* urgent, yes, mah, buttons col */}
 								<ZIonCol
 									size='max-content'
@@ -422,9 +458,9 @@ const ZQuestionsList: React.FC = () => {
 								</ZIonCol>
 
 								{/* Tag, title, content Col */}
-								<ZIonCol className='flex ion-justify-content-between flex-col cursor-pointer'>
+								<ZIonCol className='flex flex-col cursor-pointer ion-justify-content-between'>
 									<div className=''>
-										<ZIonTitle className='ion-no-padding overflow-hidden line-clamp-1'>
+										<ZIonTitle className='overflow-hidden ion-no-padding line-clamp-1'>
 											<ZIonChip color='secondary'>In Progress</ZIonChip>
 											<ZIonText className='ms-1' color='dark'>
 												Some Content
@@ -433,7 +469,7 @@ const ZQuestionsList: React.FC = () => {
 
 										<div className='overflow-hidden line-clamp-2'>
 											<ZIonText
-												className='mt-1 text-sm ms-1 block'
+												className='block mt-1 text-sm ms-1'
 												color='dark'
 											>
 												Lorem ipsum dolor sit amet, consectetur adipisicing
@@ -446,7 +482,7 @@ const ZQuestionsList: React.FC = () => {
 
 									<div className='mt-1'>
 										<ZIonText className='block'>
-											<ZIonText className='me-1 text-sm' color='dark'>
+											<ZIonText className='text-sm me-1' color='dark'>
 												Target Release
 											</ZIonText>
 											<ZIonChip>May 2023</ZIonChip>
@@ -512,6 +548,9 @@ const ZQuestionsList: React.FC = () => {
 										fill='clear'
 										color='dark'
 										className='z-10'
+										onClick={() => {
+											setFieldValue('tab', ZRoadMapTabEnum.commentsTab, false);
+										}}
 									>
 										<ZIonIcon icon={chatbubblesOutline} slot='icon-only' />
 										{!isMdScale ? (
@@ -531,6 +570,9 @@ const ZQuestionsList: React.FC = () => {
 										fill='clear'
 										color='dark'
 										className='z-10'
+										onClick={() => {
+											setFieldValue('tab', ZRoadMapTabEnum.timelogTab, false);
+										}}
 									>
 										<ZIonIcon icon={clipboardOutline} slot='icon-only' />
 										{!isMdScale ? (
@@ -556,11 +598,131 @@ const ZQuestionsList: React.FC = () => {
 														icon={fileTrayStackedOutline}
 														className='w-10 h-10'
 													/>
-													<ZIonText className='ion-no-padding text-lg mt-1'>
+													<ZIonText className='mt-1 text-lg ion-no-padding'>
 														No questions found!
 													</ZIonText>
 												</ZIonCol>
 											</ZIonRow> */}
+				</ZIonGrid>
+			</ZIonCol>
+		</>
+	);
+};
+
+const ZTimeLogTab: React.FC = () => {
+	const { values, setFieldValue } = useFormikContext<{
+		tab?: ZRoadMapTabEnum;
+	}>();
+	return (
+		<>
+			<ZIonCol
+				sizeXl='7'
+				sizeLg='8.5'
+				sizeMd='10'
+				sizeSm='11'
+				sizeXs='12'
+				className={classNames({
+					'ion-padding flex ion-justify-content-start ion-align-items-center zaions__bg_white rounded-t-lg shadow-md border-b gap-2':
+						true,
+					// 'flex-col': !isMdScale,
+				})}
+			>
+				<ZIonIcon
+					icon={arrowBackOutline}
+					className='w-6 h-6 cursor-pointer'
+					onClick={() => {
+						setFieldValue('tab', ZRoadMapTabEnum.questionsListTab, false);
+					}}
+				/>
+				<ZIonText className='text-lg'>Code sandbox</ZIonText>
+			</ZIonCol>
+
+			{/*  */}
+			<ZIonCol
+				sizeXl='7'
+				sizeLg='8.5'
+				sizeMd='10'
+				sizeSm='11'
+				sizeXs='12'
+				className='overflow-hidden border-b rounded-b-lg shadow-md ion-no-padding zaions__bg_white'
+			>
+				<ZIonText className='block mt-5 mb-3 text-lg ps-5 pe-2'>
+					Timelog
+				</ZIonText>
+
+				<ZIonGrid className='mb-4 ion-no-padding'>
+					<ZIonRow>
+						<ZIonCol className='flex ps-6'>
+							<div className='w-1 h-full mt-2 ms-2 me-5 zaions__primary_bg'></div>
+							<div className=''>
+								<div className='relative mb-10'>
+									<div className='absolute w-5 h-5 rounded-full top-[0.4rem] left-[-2rem] zaions__primary_bg'></div>
+
+									<ZIonText className='block py-1 font-bold text-md'>
+										May 25, 2023
+									</ZIonText>
+
+									<ZIonText className='text-md'>
+										<ZIonText className='font-semibold text-md me-1'>
+											Demo User
+										</ZIonText>
+										<ZIonText className='text-md me-1'>update</ZIonText>
+										<ZIonChip className='text-sm px-[7px] py-[6px] rounded-lg h-[1.5rem] me-1'>
+											Target release
+										</ZIonChip>
+										to
+										<ZIonChip className='text-sm h-[1.5rem] rounded-lg ms-1 px-[7px] py-[6px]'>
+											may 24, 2023
+										</ZIonChip>
+									</ZIonText>
+								</div>
+
+								<div className='relative mb-10'>
+									<div className='absolute w-5 h-5 rounded-full top-2 left-[-2rem] zaions__primary_bg'></div>
+
+									<ZIonText className='block py-1 font-bold text-md'>
+										May 25, 2023
+									</ZIonText>
+
+									<ZIonText className='text-md'>
+										<ZIonText className='font-semibold text-md me-1'>
+											Demo User
+										</ZIonText>
+										<ZIonText className='text-md me-1'>update</ZIonText>
+										<ZIonChip className='text-sm px-[7px] py-[6px] rounded-lg h-[1.5rem] me-1'>
+											Target release
+										</ZIonChip>
+										to
+										<ZIonChip className='text-sm h-[1.5rem] rounded-lg ms-1 px-[7px] py-[6px]'>
+											may 24, 2023
+										</ZIonChip>
+									</ZIonText>
+								</div>
+
+								<div className='relative mb-10'>
+									<div className='absolute w-5 h-5 rounded-full top-2 left-[-2rem] zaions__primary_bg'></div>
+
+									<ZIonText className='block py-1 font-bold text-md'>
+										May 25, 2023
+									</ZIonText>
+
+									<ZIonText className='text-md'>
+										<ZIonText className='font-semibold text-md me-1'>
+											Demo User
+										</ZIonText>
+										<ZIonText className='text-md me-1'>update</ZIonText>
+										<ZIonChip className='text-sm px-[7px] py-[6px] rounded-lg h-[1.5rem] me-1'>
+											Target release
+										</ZIonChip>
+										to
+										<ZIonChip className='text-sm h-[1.5rem] rounded-lg ms-1 px-[7px] py-[6px]'>
+											may 24, 2023
+										</ZIonChip>
+									</ZIonText>
+								</div>
+							</div>
+						</ZIonCol>
+					</ZIonRow>
 				</ZIonGrid>
 			</ZIonCol>
 		</>
